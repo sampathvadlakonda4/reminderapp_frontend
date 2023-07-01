@@ -28,6 +28,14 @@
 <script>
 import services from "../services/services"
 export default {
+    beforeRouteEnter(to,from,next){
+        if(localStorage.userInfo){
+            next('/home')
+        }
+        else{
+            next();
+        }
+    },
     data(){
         return{
             new_password: '',
@@ -44,12 +52,14 @@ export default {
                 }
                 let res = await services.user_forgot_password(payload)
                 if(res.status == '204'){
-                    alert('Entered email not found')
+                    this.$toast.clear()
+                    this.$toast.error('Entered email not found', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
                 else if(res.status == '200'){
                     this.forgot_email = ''
                     this.new_password = ''
-                    alert('password changed successfully')
+                    this.$toast.clear()
+                    this.$toast.success('Password changed successfully', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
             }
             catch(err){

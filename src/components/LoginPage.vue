@@ -71,6 +71,14 @@
 <script>
 import services from "../services/services"
 export default {
+    beforeRouteEnter(to,from,next){
+        if(localStorage.userInfo){
+            next('/home')
+        }
+        else{
+            next()
+        }
+    },
     data(){
         return{
             email: '',
@@ -98,14 +106,17 @@ export default {
                     if(matched != ''){
                         localStorage.setItem('userInfo',JSON.stringify(matched));
                         this.$router.push('/home')
-                        alert('logged in successfully')
+                        this.$toast.clear()
+                        this.$toast.success('Logged in successfully', {duration: 2000, position: 'top', pauseOnHover: true})
                     }
                     else{
-                        alert('Please enter valid details')
+                        this.$toast.clear()
+                        this.$toast.error('Please enter valid details', {duration: 2000, position: 'top', pauseOnHover: true})
                     }
                 }
                 else if(res.status == "204"){
-                    alert('No data found')
+                    this.$toast.clear()
+                    this.$toast.error('No data found', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
             }
             catch(err){
@@ -132,10 +143,12 @@ export default {
                     this.email_signup = ''
                     this.password_signup = ''
                     this.phone_number_signup = ''
-                    alert('Signed up successfully')
+                    this.$toast.clear()
+                    this.$toast.success('Signed up successfully', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
                 else{
-                    alert('something went wrong')
+                    this.$toast.clear()
+                    this.$toast.error('Something went wrong', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
             }
             catch(err){

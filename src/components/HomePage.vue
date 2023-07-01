@@ -106,13 +106,15 @@ export default {
                 }
                 let res = await services.saveRecord(payload)
                 if(res.status == '200'){
-                    alert('record saved successfully')
+                    this.$toast.clear()
+                    this.$toast.success('Record saved successfully', {duration: 2000, position: 'top', pauseOnHover: true})
                     this.time = ''
                     this.reminderdata = ''
                     await this.user_records();
                 }
                 else{
-                    alert('something went wrong')
+                    this.$toast.clear()
+                    this.$toast.error('Something went wrong', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
             }
             catch(err){
@@ -126,11 +128,13 @@ export default {
                 }
                 let res = await services.deleteRecord(payload)
                 if(res.status == '200'){
-                    alert('record deleted successfully')
+                    this.$toast.clear()
+                    this.$toast.success('Record deleted successfully', {duration: 2000, position: 'top', pauseOnHover: true})
                     await this.user_records();
                 }
                 else{
-                    alert('something went wrong')
+                    this.$toast.clear()
+                    this.$toast.error('Something went wrong', {duration: 2000, position: 'top', pauseOnHover: true})
                 }
             }
             catch(err){
